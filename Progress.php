@@ -107,6 +107,12 @@ class Progress
         if ($id === $this->getFirstItem()) {
             return true;
         }
+
+        //Done array is empty is not available
+        if (count($this->doneUnorderedItems) < 1) {
+            return false;
+        }
+
         //If is done is available
         if (array_search($id, $this->getDoneOrderedItems())) {
             return true;

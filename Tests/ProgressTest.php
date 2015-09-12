@@ -85,4 +85,24 @@ class ProgressTest extends RichTestCase
         $this->assertException($test, 'InvalidArgumentException');
     }
 
+    public function testIfDoneArrayIsEmptySecondIsUnavailable()
+    {
+        $allOrdered = [1, 2, 3];
+        $doneUnordered = [];
+        $testId = 2;
+        $progress = new Progress($allOrdered, $doneUnordered);
+
+        $this->assertFalse($progress->isAvailable($testId));
+    }
+
+    public function testIfDoneArrayIsEmptyFirstIsAvailable()
+    {
+        $allOrdered = [1, 2, 3];
+        $doneUnordered = [];
+        $testId = 1;
+        $progress = new Progress($allOrdered, $doneUnordered);
+
+        $this->assertTrue($progress->isAvailable($testId));
+    }
+
 }
