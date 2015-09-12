@@ -1,0 +1,2 @@
+# Progress
+Simple decision class
