@@ -3,8 +3,8 @@
 /**
  * Class Progress
  *
- * @autor Mateusz Dołęga <mdx@mdx.pl>
- * @see https://github.com/mdxpl/Progress
+ * @author Mateusz Dołęga <mdx@mdx.pl>
+ * @link https://github.com/mdxpl/Progress
  */
 class Progress
 {

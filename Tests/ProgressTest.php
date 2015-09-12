@@ -5,8 +5,7 @@ include('Progress.php');
 /**
  * Class ProgressTest
  *
- * @autor Mateusz Dołęga <mdx@mdx.pl>
- * @see https://github.com/mdxpl/Progress
+ * @author Mateusz Dołęga <mdx@mdx.pl>
  */
 class ProgressTest extends RichTestCase
 {

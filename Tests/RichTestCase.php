@@ -3,6 +3,13 @@
 class RichTestCase extends PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @param callable $callback
+     * @param string $expectedException
+     * @param null $expectedCode
+     * @param null $expectedMessage
+     * @link https://gist.github.com/VladaHejda/8826707
+     */
     protected function assertException(callable $callback, $expectedException = 'Exception', $expectedCode = null, $expectedMessage = null)
     {
         $expectedException = ltrim((string)$expectedException, '\\');
