@@ -105,4 +105,21 @@ class ProgressTest extends RichTestCase
         $this->assertTrue($progress->isAvailable($testId));
     }
 
+    public function testAlphabeticalArrayIfNothingIsDoneLastIsUnavailable()
+    {
+        $allOrdered = ['cat', 'dog', 'cow'];
+        $doneUnordered = [];
+        $testId = 'cow';
+        $progress = new Progress($allOrdered, $doneUnordered);
+        $this->assertFalse($progress->isAvailable($testId));
+    }
+
+    public function testAlphabeticalArrayIfNothingIsDoneFirstIsAvailable()
+    {
+        $allOrdered = ['cat', 'dog', 'cow'];
+        $doneUnordered = [];
+        $testId = 'cat';
+        $progress = new Progress($allOrdered, $doneUnordered);
+        $this->assertTrue($progress->isAvailable($testId));
+    }
 }

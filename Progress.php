@@ -82,7 +82,7 @@ class Progress
     }
 
     /**
-     * @param int $id
+     * @param $id
      * @return bool
      */
     public function isDone($id)
@@ -90,17 +90,27 @@ class Progress
         return in_array($id, $this->getDoneOrderedItems());
     }
 
+    /**
+     * @return mixed
+     */
     public function getLastDone()
     {
         $done = $this->getDoneOrderedItems();
         return end($done);
     }
 
+    /**
+     * @return array
+     */
     public function getFirstItem()
     {
         return $this->getAllOrderedItems()[0];
     }
 
+    /**
+     * @param mixed $id
+     * @return bool
+     */
     public function isAvailable($id)
     {
         //First is always available
