@@ -49,7 +49,8 @@ class Progress
         if (count($allOrderedItems) < 1) {
             throw new InvalidArgumentException('Ordered items array can`t be empty.');
         }
-        $this->allOrderedItems = $allOrderedItems;
+        //reset keys 0..n
+        $this->allOrderedItems = array_values($allOrderedItems);
     }
 
     /**
