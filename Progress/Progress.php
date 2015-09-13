@@ -1,6 +1,6 @@
 <?php
 
-include('ProgressInterface.php');
+require_once('ProgressInterface.php');
 
 /**
  * Class Progress

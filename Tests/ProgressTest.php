@@ -1,12 +1,11 @@
 <?php
 
-include('RichTestCase.php');
-include('Progress/Progress.php');
+require_once('Progress/Progress.php');
 
 /**
  * Class ProgressTest
  */
-class ProgressTest extends RichTestCase
+class ProgressTest extends PHPUnit_Framework_TestCase
 {
 
     public function testFirstItem()

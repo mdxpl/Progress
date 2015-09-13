@@ -1,6 +1,6 @@
 <?php
 
-include('DecisionMakerInterface.php');
+require_once('DecisionMakerInterface.php');
 
 /**
  * Class TwoFlatArraysDecisionMaker

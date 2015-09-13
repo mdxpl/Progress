@@ -1,6 +1,6 @@
 <?php
-include('Progress/Progress.php');
-include('Progress/DecisionMaker/TwoFlatArraysDecisionMaker.php');
+require_once('Progress/Progress.php');
+require_once('Progress/DecisionMaker/TwoFlatArraysDecisionMaker.php');
 
 //input
 $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
