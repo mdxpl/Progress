@@ -46,13 +46,13 @@ class Progress implements ProgressInterface
      * @param array $allOrderedItems
      * @throws \InvalidArgumentException
      */
-    public function setAllOrderedItems(array $allOrderedItems)
+    private function setAllOrderedItems(array $allOrderedItems)
     {
         if (count($allOrderedItems) < 1) {
             throw new \InvalidArgumentException('Ordered items array can`t be empty.');
         }
         //reset keys 0..n
-        $this->allOrderedItems = $allOrderedItems;
+        $this->allOrderedItems = array_values($allOrderedItems);
     }
 
     /**
@@ -66,7 +66,7 @@ class Progress implements ProgressInterface
     /**
      * @param array $doneUnorderedItems
      */
-    public function setDoneUnorderedItems($doneUnorderedItems)
+    private function setDoneUnorderedItems($doneUnorderedItems)
     {
         $this->doneUnorderedItems = $doneUnorderedItems;
     }

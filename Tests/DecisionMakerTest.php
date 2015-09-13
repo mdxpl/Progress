@@ -9,6 +9,26 @@ require_once('Progress/DecisionMaker/DecisionMaker.php');
 class DecisionMakerTest extends PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @covers DecisionMaker::isAvailable
+     */
+    public function testIfItemNotExistsInAllItemsThrowAnException()
+    {
+        $test = function () {
+            $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
+            $doneUnordered = [5, 6, 9, 10];
+            $testId = 11;
+            $progress = new Progress($allOrdered, $doneUnordered);
+            $decisionMaker = new DecisionMaker($progress);
+            $decisionMaker->isAvailable($testId);
+        };
+
+        $this->assertException($test, 'InvalidArgumentException');
+    }
+
+    /**
+     * @covers DecisionMaker::isAvailable
+     */
     public function testIfIsMoreThanOneAfterIsUnavailable()
     {
         $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
@@ -20,6 +40,22 @@ class DecisionMakerTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($decisionMaker->isAvailable($testId));
     }
 
+    /**
+     * @covers DecisionMaker::getLastAvailable
+     */
+    public function testGetLastAvailable()
+    {
+        $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
+        $doneUnordered = [5, 6, 9, 10];
+        $progress = new Progress($allOrdered, $doneUnordered);
+        $decisionMaker = new DecisionMaker($progress);
+
+        $this->assertEquals(7, $decisionMaker->getLastAvailable());
+    }
+
+    /**
+     * @covers DecisionMaker::isAvailable
+     */
     public function testIfIsEqualToOneAfterDoneIsAvailable()
     {
         $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
@@ -31,6 +67,9 @@ class DecisionMakerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decisionMaker->isAvailable($testId));
     }
 
+    /**
+     * @covers DecisionMaker::isAvailable
+     */
     public function testIfIsEqualToLastDoneIsAvailable()
     {
         $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
@@ -42,6 +81,9 @@ class DecisionMakerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decisionMaker->isAvailable($testId));
     }
 
+    /**
+     * @covers DecisionMaker::isAvailable
+     */
     public function testIfIsLessThanLastDoneIdAvailable()
     {
         $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
@@ -53,6 +95,9 @@ class DecisionMakerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decisionMaker->isAvailable($testId));
     }
 
+    /**
+     * @covers DecisionMaker::isAvailable
+     */
     public function testIfNothingIsDoneFirstIsAvailable()
     {
         $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
@@ -64,6 +109,9 @@ class DecisionMakerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decisionMaker->isAvailable($testId));
     }
 
+    /**
+     * @covers DecisionMaker::isAvailable
+     */
     public function testIfNothingIsDoneLastIsUnavailable()
     {
         $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
@@ -75,6 +123,9 @@ class DecisionMakerTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($decisionMaker->isAvailable($testId));
     }
 
+    /**
+     * @covers DecisionMaker::isAvailable
+     */
     public function testIfNothingIsDoneSecondIsUnavailable()
     {
         $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
@@ -86,6 +137,9 @@ class DecisionMakerTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($decisionMaker->isAvailable($testId));
     }
 
+    /**
+     * @covers DecisionMaker::isAvailable
+     */
     public function testIfAllOrderedArrayIsEmptyObjectThrowException()
     {
         $test = function () {
@@ -98,6 +152,9 @@ class DecisionMakerTest extends PHPUnit_Framework_TestCase
         $this->assertException($test, 'InvalidArgumentException');
     }
 
+    /**
+     * @covers DecisionMaker::isAvailable
+     */
     public function testIfDoneArrayIsEmptySecondIsUnavailable()
     {
         $allOrdered = [1, 2, 3];
@@ -109,6 +166,9 @@ class DecisionMakerTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($decisionMaker->isAvailable($testId));
     }
 
+    /**
+     * @covers DecisionMaker::isAvailable
+     */
     public function testIfDoneArrayIsEmptyFirstIsAvailable()
     {
         $allOrdered = [1, 2, 3];
@@ -120,6 +180,9 @@ class DecisionMakerTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($decisionMaker->isAvailable($testId));
     }
 
+    /**
+     * @covers DecisionMaker::isAvailable
+     */
     public function testAlphabeticalArrayIfNothingIsDoneLastIsUnavailable()
     {
         $allOrdered = ['cat', 'dog', 'cow'];
@@ -131,6 +194,9 @@ class DecisionMakerTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($decisionMaker->isAvailable($testId));
     }
 
+    /**
+     * @covers DecisionMaker::isAvailable
+     */
     public function testAlphabeticalArrayIfNothingIsDoneFirstIsAvailable()
     {
         $allOrdered = ['cat', 'dog', 'cow'];

@@ -3,18 +3,18 @@ require_once('Progress/Progress.php');
 require_once('Progress/DecisionMaker/DecisionMaker.php');
 
 //input
-$allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
-$doneUnordered = [9, 5, 6];
+$allSorted = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
+$done = [9, 5, 6];
 $current = 4;
 
 //progress
-$progress = new Progress($allOrdered, $doneUnordered);
+$progress = new Progress($allSorted, $done);
 
 echo 'All items: ' . "\n";
-print_r($allOrdered);
+print_r($allSorted);
 
 echo 'Done items: ' . "\n";
-print_r($doneUnordered);
+print_r($done);
 
 echo 'Done items ordered by all items: ' . "\n";
 print_r($progress->getDoneOrderedItems());

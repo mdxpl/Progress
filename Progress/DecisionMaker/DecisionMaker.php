@@ -17,6 +17,7 @@ class DecisionMaker implements DecisionMakerInterface
 
     /**
      * @param ProgressInterface $progress
+     * @codeCoverageIgnore
      */
     public function __construct(ProgressInterface $progress)
     {
@@ -33,8 +34,6 @@ class DecisionMaker implements DecisionMakerInterface
         foreach ($all as $item) {
             if ($this->isAvailable($item)) {
                 $lastAvailable = $item;
-            } else {
-                break;
             }
         }
 
@@ -70,9 +69,7 @@ class DecisionMaker implements DecisionMakerInterface
         }
 
         //If nothing is done only first is available
-        if (!$lastDone = $this->progress->getLastDoneItem()) {
-            return false;
-        }
+        $lastDone = $this->progress->getLastDoneItem();
 
         //If item position is equal to one after last done is available
         return $itemPosition === array_search($lastDone, $this->progress->getAllOrderedItems()) + 1;
