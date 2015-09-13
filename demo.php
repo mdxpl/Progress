@@ -1,6 +1,6 @@
 <?php
 require_once('Progress/Progress.php');
-require_once('Progress/DecisionMaker/TwoFlatArraysDecisionMaker.php');
+require_once('Progress/DecisionMaker/DecisionMaker.php');
 
 //input
 $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
@@ -27,7 +27,7 @@ echo 'Next Item: ' . $progress->getNextItem($current) . "\n";
 echo 'Previous Item: ' . $progress->getPreviousItem($current) . "\n";
 
 //decisions
-$decisionMaker = new TwoFlatArraysDecisionMaker($progress);
+$decisionMaker = new DecisionMaker($progress);
 echo 'Current item ' . $current . ' is ' . ($decisionMaker->isAvailable($current) ? 'available' : 'unavailable') . "\n";
 echo 'Last available item: ' . $decisionMaker->getLastAvailable() . "\n";
 for ($i = 1; $i <= 10; $i++) {

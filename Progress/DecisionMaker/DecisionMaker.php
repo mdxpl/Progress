@@ -3,11 +3,11 @@
 require_once('DecisionMakerInterface.php');
 
 /**
- * Class TwoFlatArraysDecisionMaker
+ * Class DecisionMaker
  *
  * @link https://github.com/mdxpl/Progress
  */
-class TwoFlatArraysDecisionMaker implements DecisionMakerInterface
+class DecisionMaker implements DecisionMakerInterface
 {
 
     /**

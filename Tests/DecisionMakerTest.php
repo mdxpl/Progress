@@ -1,12 +1,12 @@
 <?php
 
 require_once('Progress/Progress.php');
-require_once('Progress/DecisionMaker/TwoFlatArraysDecisionMaker.php');
+require_once('Progress/DecisionMaker/DecisionMaker.php');
 
 /**
  * Class ProgressTest
  */
-class TwoFlatArraysDecisionMakerTest extends PHPUnit_Framework_TestCase
+class DecisionMakerTest extends PHPUnit_Framework_TestCase
 {
 
     public function testIfIsMoreThanOneAfterIsUnavailable()
@@ -15,7 +15,7 @@ class TwoFlatArraysDecisionMakerTest extends PHPUnit_Framework_TestCase
         $doneUnordered = [5, 6, 9, 10];
         $testId = 2;
         $progress = new Progress($allOrdered, $doneUnordered);
-        $decisionMaker = new TwoFlatArraysDecisionMaker($progress);
+        $decisionMaker = new DecisionMaker($progress);
 
         $this->assertFalse($decisionMaker->isAvailable($testId));
     }
@@ -26,7 +26,7 @@ class TwoFlatArraysDecisionMakerTest extends PHPUnit_Framework_TestCase
         $doneUnordered = [5, 6, 9, 10];
         $testId = 7;
         $progress = new Progress($allOrdered, $doneUnordered);
-        $decisionMaker = new TwoFlatArraysDecisionMaker($progress);
+        $decisionMaker = new DecisionMaker($progress);
 
         $this->assertTrue($decisionMaker->isAvailable($testId));
     }
@@ -37,7 +37,7 @@ class TwoFlatArraysDecisionMakerTest extends PHPUnit_Framework_TestCase
         $doneUnordered = [5, 6, 9, 10];
         $testId = 10;
         $progress = new Progress($allOrdered, $doneUnordered);
-        $decisionMaker = new TwoFlatArraysDecisionMaker($progress);
+        $decisionMaker = new DecisionMaker($progress);
 
         $this->assertTrue($decisionMaker->isAvailable($testId));
     }
@@ -48,7 +48,7 @@ class TwoFlatArraysDecisionMakerTest extends PHPUnit_Framework_TestCase
         $doneUnordered = [5, 6, 9, 10];
         $testId = 6;
         $progress = new Progress($allOrdered, $doneUnordered);
-        $decisionMaker = new TwoFlatArraysDecisionMaker($progress);
+        $decisionMaker = new DecisionMaker($progress);
 
         $this->assertTrue($decisionMaker->isAvailable($testId));
     }
@@ -59,7 +59,7 @@ class TwoFlatArraysDecisionMakerTest extends PHPUnit_Framework_TestCase
         $doneUnordered = [];
         $testId = 9;
         $progress = new Progress($allOrdered, $doneUnordered);
-        $decisionMaker = new TwoFlatArraysDecisionMaker($progress);
+        $decisionMaker = new DecisionMaker($progress);
 
         $this->assertTrue($decisionMaker->isAvailable($testId));
     }
@@ -70,7 +70,7 @@ class TwoFlatArraysDecisionMakerTest extends PHPUnit_Framework_TestCase
         $doneUnordered = [];
         $testId = 3;
         $progress = new Progress($allOrdered, $doneUnordered);
-        $decisionMaker = new TwoFlatArraysDecisionMaker($progress);
+        $decisionMaker = new DecisionMaker($progress);
 
         $this->assertFalse($decisionMaker->isAvailable($testId));
     }
@@ -81,7 +81,7 @@ class TwoFlatArraysDecisionMakerTest extends PHPUnit_Framework_TestCase
         $doneUnordered = [];
         $testId = 6;
         $progress = new Progress($allOrdered, $doneUnordered);
-        $decisionMaker = new TwoFlatArraysDecisionMaker($progress);
+        $decisionMaker = new DecisionMaker($progress);
 
         $this->assertFalse($decisionMaker->isAvailable($testId));
     }
@@ -92,7 +92,7 @@ class TwoFlatArraysDecisionMakerTest extends PHPUnit_Framework_TestCase
             $allOrdered = [];
             $doneUnordered = [];
             $progress = new Progress($allOrdered, $doneUnordered);
-            new TwoFlatArraysDecisionMaker($progress);
+            new DecisionMaker($progress);
         };
 
         $this->assertException($test, 'InvalidArgumentException');
@@ -104,7 +104,7 @@ class TwoFlatArraysDecisionMakerTest extends PHPUnit_Framework_TestCase
         $doneUnordered = [];
         $testId = 2;
         $progress = new Progress($allOrdered, $doneUnordered);
-        $decisionMaker = new TwoFlatArraysDecisionMaker($progress);
+        $decisionMaker = new DecisionMaker($progress);
 
         $this->assertFalse($decisionMaker->isAvailable($testId));
     }
@@ -115,7 +115,7 @@ class TwoFlatArraysDecisionMakerTest extends PHPUnit_Framework_TestCase
         $doneUnordered = [];
         $testId = 1;
         $progress = new Progress($allOrdered, $doneUnordered);
-        $decisionMaker = new TwoFlatArraysDecisionMaker($progress);
+        $decisionMaker = new DecisionMaker($progress);
 
         $this->assertTrue($decisionMaker->isAvailable($testId));
     }
@@ -126,7 +126,7 @@ class TwoFlatArraysDecisionMakerTest extends PHPUnit_Framework_TestCase
         $doneUnordered = [];
         $testId = 'cow';
         $progress = new Progress($allOrdered, $doneUnordered);
-        $decisionMaker = new TwoFlatArraysDecisionMaker($progress);
+        $decisionMaker = new DecisionMaker($progress);
 
         $this->assertFalse($decisionMaker->isAvailable($testId));
     }
@@ -137,7 +137,7 @@ class TwoFlatArraysDecisionMakerTest extends PHPUnit_Framework_TestCase
         $doneUnordered = [];
         $testId = 'cat';
         $progress = new Progress($allOrdered, $doneUnordered);
-        $decisionMaker = new TwoFlatArraysDecisionMaker($progress);
+        $decisionMaker = new DecisionMaker($progress);
 
         $this->assertTrue($decisionMaker->isAvailable($testId));
     }
