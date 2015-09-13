@@ -1,125 +1,101 @@
 <?php
 include('RichTestCase.php');
-include('Progress.php');
+include('Progress/Progress.php');
 
 /**
  * Class ProgressTest
- *
- * @author Mateusz Dołęga <mdx@mdx.pl>
  */
 class ProgressTest extends RichTestCase
 {
 
-    public function testIfIsMoreThanOneAfterIsUnavailable()
-    {
-        $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
-        $doneUnordered = [5, 6, 9, 10];
-        $testId = 2;
-        $progress = new Progress($allOrdered, $doneUnordered);
-        $this->assertFalse($progress->isAvailable($testId));
-    }
-
-    public function testIfIsEqualToOneAfterDoneIsAvailable()
-    {
-        $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
-        $doneUnordered = [5, 6, 9, 10];
-        $testId = 7;
-        $progress = new Progress($allOrdered, $doneUnordered);
-        $this->assertTrue($progress->isAvailable($testId));
-    }
-
-    public function testIfIsEqualToLastDoneIsAvailable()
-    {
-        $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
-        $doneUnordered = [5, 6, 9, 10];
-        $testId = 10;
-        $progress = new Progress($allOrdered, $doneUnordered);
-        $this->assertTrue($progress->isAvailable($testId));
-    }
-
-    public function testIfIsLessThanLastDoneIdAvailable()
-    {
-        $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
-        $doneUnordered = [5, 6, 9, 10];
-        $testId = 6;
-        $progress = new Progress($allOrdered, $doneUnordered);
-        $this->assertTrue($progress->isAvailable($testId));
-    }
-
-    public function testIfNothingIsDoneFirstIsAvailable()
-    {
-        $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
-        $doneUnordered = [];
-        $testId = 9;
-        $progress = new Progress($allOrdered, $doneUnordered);
-        $this->assertTrue($progress->isAvailable($testId));
-    }
-
-    public function testIfNothingIsDoneLastIsUnavailable()
-    {
-        $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
-        $doneUnordered = [];
-        $testId = 3;
-        $progress = new Progress($allOrdered, $doneUnordered);
-        $this->assertFalse($progress->isAvailable($testId));
-    }
-
-    public function testIfNothingIsDoneSecondIsUnavailable()
-    {
-        $allOrdered = [9, 6, 5, 4, 8, 10, 7, 2, 1, 3];
-        $doneUnordered = [];
-        $testId = 6;
-        $progress = new Progress($allOrdered, $doneUnordered);
-
-        $this->assertFalse($progress->isAvailable($testId));
-    }
-
-    public function testIfAllOrderedArrayIsEmptyObjectThrowException()
-    {
-        $test = function () {
-            $allOrdered = [];
-            $doneUnordered = [];
-            new Progress($allOrdered, $doneUnordered);
-        };
-
-        $this->assertException($test, 'InvalidArgumentException');
-    }
-
-    public function testIfDoneArrayIsEmptySecondIsUnavailable()
+    public function testFirstItem()
     {
         $allOrdered = [1, 2, 3];
-        $doneUnordered = [];
-        $testId = 2;
+        $doneUnordered = [2, 1];
         $progress = new Progress($allOrdered, $doneUnordered);
 
-        $this->assertFalse($progress->isAvailable($testId));
+        $this->assertEquals($progress->getFirstItem(), 1);
     }
 
-    public function testIfDoneArrayIsEmptyFirstIsAvailable()
+    public function testLastItem()
     {
         $allOrdered = [1, 2, 3];
-        $doneUnordered = [];
-        $testId = 1;
+        $doneUnordered = [2, 1];
         $progress = new Progress($allOrdered, $doneUnordered);
 
-        $this->assertTrue($progress->isAvailable($testId));
+        $this->assertEquals($progress->getLastItem(), 3);
     }
 
-    public function testAlphabeticalArrayIfNothingIsDoneLastIsUnavailable()
+    public function testLastDoneItem()
     {
-        $allOrdered = ['cat', 'dog', 'cow'];
-        $doneUnordered = [];
-        $testId = 'cow';
+        $allOrdered = [1, 2, 3];
+        $doneUnordered = [2, 1];
         $progress = new Progress($allOrdered, $doneUnordered);
-        $this->assertFalse($progress->isAvailable($testId));
+
+        $this->assertEquals($progress->getLastDoneItem(), 2);
     }
 
-    public function testAlphabeticalArrayIfNothingIsDoneFirstIsAvailable()
+
+    public function testGetAllOrderedItems()
     {
-        $allOrdered = ['cat', 'dog', 'cow'];
-        $doneUnordered = [];
-        $testId = 'cat';
+        $allOrdered = [1, 2, 3];
+        $doneUnordered = [2, 1];
         $progress = new Progress($allOrdered, $doneUnordered);
-        $this->assertTrue($progress->isAvailable($testId));
+
+        $this->assertEquals($progress->getAllOrderedItems(), $allOrdered);
+    }
+
+    public function testGetDoneUnorderedItems()
+    {
+        $allOrdered = [1, 2, 3];
+        $doneUnordered = [2, 1];
+        $progress = new Progress($allOrdered, $doneUnordered);
+
+        $this->assertEquals($progress->getDoneUnorderedItems(), $doneUnordered);
+    }
+
+    public function testNextItem()
+    {
+        $allOrdered = [1, 2, 3];
+        $doneUnordered = [2, 1];
+        $progress = new Progress($allOrdered, $doneUnordered);
+
+        $this->assertEquals($progress->getNextItem(1), 2);
+    }
+
+    public function testPrevItemIsEmptyForFirstItem()
+    {
+        $allOrdered = [1, 2, 3];
+        $doneUnordered = [2, 1];
+        $progress = new Progress($allOrdered, $doneUnordered);
+
+        $this->assertNull($progress->getPreviousItem(1));
+    }
+
+    public function testNextItemIsEmptyForLastItem()
+    {
+        $allOrdered = [1, 2, 3];
+        $doneUnordered = [2, 1];
+        $progress = new Progress($allOrdered, $doneUnordered);
+
+        $this->assertNull($progress->getNextItem(3));
+    }
+
+    public function testPrevItemIsEmptyForSecondItem()
+    {
+        $allOrdered = [1, 2, 3];
+        $doneUnordered = [2, 1];
+        $progress = new Progress($allOrdered, $doneUnordered);
+
+        $this->assertEquals($progress->getPreviousItem(2), 1);
+    }
+
+    public function testNextItemIsEmptyForSecondItem()
+    {
+        $allOrdered = [1, 2, 3];
+        $doneUnordered = [2, 1];
+        $progress = new Progress($allOrdered, $doneUnordered);
+
+        $this->assertEquals($progress->getNextItem(2), 3);
     }
 }

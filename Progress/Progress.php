@@ -1,33 +1,34 @@
 <?php
 
+include('ProgressInterface.php');
+
 /**
  * Class Progress
  *
- * @author Mateusz Dołęga <mdx@mdx.pl>
  * @link https://github.com/mdxpl/Progress
  */
-class Progress
+class Progress implements ProgressInterface
 {
     /**
      * @var array
      */
-    private $allOrderedItems = [];
+    protected $allOrderedItems = [];
 
     /**
      * @var array
      */
-    private $doneUnorderedItems = [];
+    protected $doneUnorderedItems = [];
 
     /**
      * @var array|null
      */
-    private $doneOrderedItems = null;
+    protected $doneOrderedItems = null;
 
     /**
-     * @param array $allOrdered
-     * @param array $doneUnordered
+     * @param mixed $allOrdered
+     * @param mixed $doneUnordered
      */
-    public function __construct(array $allOrdered, array $doneUnordered)
+    public function __construct($allOrdered, $doneUnordered)
     {
         $this->setAllOrderedItems($allOrdered);
         $this->setDoneUnorderedItems($doneUnordered);
@@ -43,14 +44,15 @@ class Progress
 
     /**
      * @param array $allOrderedItems
+     * @throws \InvalidArgumentException
      */
     public function setAllOrderedItems(array $allOrderedItems)
     {
         if (count($allOrderedItems) < 1) {
-            throw new InvalidArgumentException('Ordered items array can`t be empty.');
+            throw new \InvalidArgumentException('Ordered items array can`t be empty.');
         }
         //reset keys 0..n
-        $this->allOrderedItems = array_values($allOrderedItems);
+        $this->allOrderedItems = $allOrderedItems;
     }
 
     /**
@@ -85,7 +87,7 @@ class Progress
      * @param $id
      * @return bool
      */
-    public function isDone($id)
+    public function isDoneItem($id)
     {
         return in_array($id, $this->getDoneOrderedItems());
     }
@@ -93,7 +95,7 @@ class Progress
     /**
      * @return mixed
      */
-    public function getLastDone()
+    public function getLastDoneItem()
     {
         $done = $this->getDoneOrderedItems();
         return end($done);
@@ -108,38 +110,61 @@ class Progress
     }
 
     /**
-     * @param mixed $id
+     * @return mixed
+     */
+    public function getLastItem()
+    {
+        $all = $this->getAllOrderedItems();
+        return end($all);
+    }
+
+    /**
+     * @param $id
      * @return bool
      */
-    public function isAvailable($id)
+    public function isFirstItem($id)
     {
-        //First is always available
-        if ($id === $this->getFirstItem()) {
-            return true;
+        return $this->getFirstItem() === $id;
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function isLastItem($id)
+    {
+        return $this->getLastItem() === $id;
+    }
+
+    /**
+     * @param $id
+     * @return mixed|null
+     */
+    public function getNextItem($id)
+    {
+        if ($this->isLastItem($id)) {
+            return null;
         }
 
-        //Done array is empty is not available
-        if (count($this->doneUnorderedItems) < 1) {
-            return false;
+        $all = $this->getAllOrderedItems();
+        $itemPosition = array_search($id, $all);
+
+        return $all[$itemPosition + 1];
+    }
+
+    /**
+     * @param $id
+     * @return mixed|null
+     */
+    public function getPreviousItem($id)
+    {
+        if ($this->isFirstItem($id)) {
+            return null;
         }
 
-        //If is done is available
-        if (array_search($id, $this->getDoneOrderedItems())) {
-            return true;
-        }
+        $all = $this->getAllOrderedItems();
+        $itemPosition = array_search($id, $all);
 
-        //If is next after done is available
-        $itemPosition = array_search($id, $this->getAllOrderedItems());
-        if (false === $itemPosition) {
-            throw new InvalidArgumentException('Id is not found in All items array.');
-        }
-
-        //If nothing is done only first is available
-        if (!$lastDone = $this->getLastDone()) {
-            return false;
-        }
-
-        //If item position is equal to one after last done is available
-        return $itemPosition === array_search($lastDone, $this->getAllOrderedItems()) + 1;
+        return $all[$itemPosition - 1];
     }
 }
