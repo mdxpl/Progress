@@ -1,4 +1,5 @@
 <?php
+
 include('RichTestCase.php');
 include('Progress/Progress.php');
 
