@@ -14,7 +14,7 @@ class DecisionMaker implements DecisionMakerInterface
     /**
      * @var ProgressInterface
      */
-    protected $progress;
+    private $progress;
 
     /**
      * @param ProgressInterface $progress
