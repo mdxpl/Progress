@@ -1,6 +1,7 @@
 <?php
 
-require_once('DecisionMakerInterface.php');
+namespace MDX\DecisionMaker;
+use MDX\Progress\ProgressInterface;
 
 /**
  * Class DecisionMaker
@@ -11,7 +12,7 @@ class DecisionMaker implements DecisionMakerInterface
 {
 
     /**
-     * @var Progress
+     * @var ProgressInterface
      */
     protected $progress;
 

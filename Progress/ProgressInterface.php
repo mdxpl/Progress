@@ -1,5 +1,7 @@
 <?php
 
+namespace MDX\Progress;
+
 /**
  * Interface ProgressInterface
  *
@@ -40,4 +42,25 @@ interface ProgressInterface
      * @return mixed|null
      */
     public function getPreviousItem($id);
+
+    /**
+     * @return array
+     */
+    public function getAllOrderedItems();
+
+    /**
+     * @return array
+     */
+    public function getDoneUnorderedItems();
+
+    /**
+     * @return array
+     */
+    public function getDoneOrderedItems();
+
+    /**
+     * @return mixed|null
+     */
+    public function getLastDoneItem();
+
 }

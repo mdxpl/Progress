@@ -1,6 +1,6 @@
 <?php
 
-require_once('ProgressInterface.php');
+namespace MDX\Progress;
 
 /**
  * Class Progress
@@ -12,23 +12,23 @@ class Progress implements ProgressInterface
     /**
      * @var array
      */
-    protected $allOrderedItems = [];
+    private $allOrderedItems = [];
 
     /**
      * @var array
      */
-    protected $doneUnorderedItems = [];
+    private $doneUnorderedItems = [];
 
     /**
      * @var array|null
      */
-    protected $doneOrderedItems = null;
+    private $doneOrderedItems = null;
 
     /**
-     * @param mixed $allOrdered
-     * @param mixed $doneUnordered
+     * @param array $allOrdered
+     * @param array $doneUnordered
      */
-    public function __construct($allOrdered, $doneUnordered)
+    public function __construct(array $allOrdered = [], array $doneUnordered = [])
     {
         $this->setAllOrderedItems($allOrdered);
         $this->setDoneUnorderedItems($doneUnordered);

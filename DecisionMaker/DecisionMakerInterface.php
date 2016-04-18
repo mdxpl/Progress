@@ -1,5 +1,8 @@
 <?php
 
+namespace MDX\DecisionMaker;
+use MDX\Progress\ProgressInterface;
+
 /**
  * Interface DecisionMakerInterface
  *
