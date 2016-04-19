@@ -3,6 +3,8 @@
 
 Is useful if you have to decide if user can access an element in a ordered queue.
 
+[ ![Codeship Status for mdxpl/Progress](https://codeship.com/projects/0dc07290-2eec-0133-cc1e-7aa4cf730dd5/status?branch=master)](https://codeship.com/projects/99240)
+
 Installation
 ============
 
